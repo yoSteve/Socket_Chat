@@ -6,6 +6,11 @@ socket.on('connect', () => {
 
 socket.on('message', (message) => {
     console.log('New message:', message.text);
+    $('.messages').append(`
+        <div class="message">
+            <p>${message.text}</p>
+        </div>
+    `);
 });
 
 // Handle new message form submission

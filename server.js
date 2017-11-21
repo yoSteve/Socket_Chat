@@ -17,8 +17,8 @@ io.on('connection', (socket) => {
 
     socket.on('message', (message) => {
         console.log('Message received: ' + message.text);
-        // io.emit() would broadcast to all socket instances including this one.
-        socket.broadcast.emit('message', message); // socket.broadcast.emit() will broadcast to all other socket instances excluding this one.
+        io.emit('message', message); // this will broadcast to all socket instances including this one.
+        // socket.broadcast.emit('message', message); // this would broadcast to all other socket instances excluding this one.
     });
 });
 
