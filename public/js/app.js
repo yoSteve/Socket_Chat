@@ -2,8 +2,15 @@ const name = getQueryVariable('name') || 'anonymous';
 const room = getQueryVariable('room') || 'Waiting Room';
 const socket = io();
 
+// set content on H1 on chat.html
+$('.room-title').html(room);
+
 socket.on('connect', () => {
     console.log('Connected to socket server!');
+    socket.emit('joinRoom', {
+        name: name,
+        room: room
+    });
 });
 
 socket.on('message', (message) => {
@@ -11,7 +18,7 @@ socket.on('message', (message) => {
     console.log('New message:', message.text);
     $('.messages').append(`
         <div class="message">
-            <p><strong>-${message.name} - [${momentTimestamp}]</strong></p>
+            <p><strong>${message.name} - [${momentTimestamp}]</strong></p>
             <p>${message.text}</p>
         </div>
     `);
