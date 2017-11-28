@@ -11,6 +11,26 @@ const clientInfo = {
     /* socket.id: { name: string, room: string } */
 }; 
 
+// Sends current users to provided socket
+function sendCurrentUsers(socket) {
+    const userInfo = clientInfo[socket.id];
+    const users = [];
+    if (typeof userInfo === 'undefined') { return; }
+
+    Object.keys(clientInfo).forEach((socketId) => {
+        const info = clientInfo[socketId];
+        if (info.room === userInfo.room ) {
+            users.push(info.name);
+        }
+    });
+    // send message back to provided socket
+    socket.emit('message', {
+        name: 'System Message',
+        text: 'Current users: ' + users.join(', '),
+        timestamp: new Date()
+    });
+}
+
 // socket.io listening for connection event
 io.on('connection', (socket) => {
     console.log('User connected via socket.io!');
@@ -35,7 +55,11 @@ io.on('connection', (socket) => {
     socket.on('message', (message) => {
         console.log(clientInfo[socket.id].room + ' Message received: ' + message.text);
         message.timestamp = new Date();
-        io.to(clientInfo[socket.id].room).emit('message', message); // io.to(room) will broadcast to all sockets connected to this room (including sender).
+        if (message.text === '@currentUsers' || message.text === '@CurrentUsers') {
+            sendCurrentUsers(socket);
+        } else {
+            io.to(clientInfo[socket.id].room).emit('message', message); // io.to(room) will broadcast to all sockets connected to this room (including sender).
+        }
     });
 
     socket.on('disconnect', () =>{
