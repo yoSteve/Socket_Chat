@@ -6,7 +6,7 @@ const socket = io();
 $('.room-title').html(room);
 
 socket.on('connect', () => {
-    console.log('Connected to socket server!');
+    console.log('Connected to socket server! - Room: ' + room);
     socket.emit('joinRoom', {
         name: name,
         room: room
@@ -19,7 +19,7 @@ socket.on('message', (message) => {
     $('.messages').append(`
         <div class="message">
             <p><strong>${message.name} - [${momentTimestamp}]</strong></p>
-            <p>${message.text}</p>
+            <p><span>&emsp;</span>${message.text}</p>
         </div>
     `);
 });
