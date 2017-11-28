@@ -16,11 +16,11 @@ socket.on('connect', () => {
 socket.on('message', (message) => {
     momentTimestamp = moment(message.timestamp).format('LT');
     console.log('New message:', message.text);
-    $('.messages').append(`
-        <div class="message">
+    $('#messages').append(`
+        <li class="message card border-primary">
             <p><strong>${message.name} - [${momentTimestamp}]</strong></p>
             <p><span>&emsp;</span>${message.text}</p>
-        </div>
+        </li>
     `);
 });
 
