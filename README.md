@@ -21,5 +21,10 @@ To see a list of current users submit an '@CurrentUsers' message.
 4. Open your web browser to `http://localhost:3000`
 5. Open another browser tab to `http://localhost:3000` and watch them talk to each other!
 
+## Built With
+* [Express](https://expressjs.com/)
+* [Socket.io](https://socket.io/)
+* [Moment.js](https://momentjs.com/)
+
 *****************************************
 [https://github.com/yoSteve/socket-basic](https://github.com/yoSteve/socket-basic)
